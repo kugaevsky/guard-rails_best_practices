@@ -1,10 +1,8 @@
 # Guard - Rails Best Practices
 
-BDD your [Rails Best Practices](http://rails-bestpractices.com/) checklist alongside your specs 
-with [Guard](https://github.com/guard/guard).
+BDD your [Rails Best Practices](http://rails-bestpractices.com/) checklist alongside your specs with [Guard](https://github.com/guard/guard).
 
-By adding your own checklists, this can be a great way to enforce those code style documents that everyone on your
-team has forgotten!
+By adding your own checklists, this can be a great way to enforce those code style documents that everyone on your team has forgotten!
 
 ## Install
 
@@ -24,15 +22,31 @@ Guard will now inform you of Rails Best Practices warnings.
 
 ## Options
 
-These options are available (with the following defaults):
+These options are available (with the following defaults).
 
-    options[:vendor]   = true # Include vendor/
-    options[:spec]     = true # Include spec/
-    options[:test]     = true # Include test/
-    options[:features] = true # Include features/
-    options[:exclude]  = '' # Exclude [PATTERN]
-    options[:run_at_start] = true # Run checklist when guard starts
-  
+**Rails best practices options**
+
+    :vendor         => true   # Include vendor/
+    :spec           => true   # Include spec/
+    :test           => true   # Include test/
+    :features       => true   # Include features/
+    :without_color  => false  # Only output plain text without color
+    :silent         => false  # Silent mode
+
+    :format                   # Output format
+    :with_textmate  => false  # Open file by textmate in html format
+    :with_mvim      => false  # Open file by mvim in html format
+    :with_hg        => false  # Display hg commit and username, only support html format
+    :with_git       => false  # Display git commit and username, only support html format
+
+    :exclude                  # Don't analyze files matching a pattern (comma-separated regexp list)
+    :only                     # analyze files only matching a pattern (comma-separated regexp list)
+
+**Guard options**
+
+    :run_at_start  => true  # Run checklist when guard starts
+    :notify        => false # Send notifications to Growl/lib-notify
+
 See https://github.com/flyerhzm/rails_best_practices for details.
 
 It is recommended that you run `rails_best_practices -g` to generate a `rails_best_practices.yml` file for your application,
