@@ -51,8 +51,10 @@ module Guard
     def run_bestpractices
       started_at = Time.now
 
-      run_options = options.select { |key, value| value && ![:run_at_start, :notify].include?(key) }.keys.map do |opt|
-        if [:format, :exclude, :only].include?(opt) 
+      run_options = options.select do |key, value|
+        value && ![:run_at_start, :notify].include?(key)
+      end.keys.map do |opt|
+        if [:format, :exclude, :only].include?(opt)
           [ opt.to_s, options[opt] ].join(' ')
         else
           opt.to_s.gsub('_','-')

@@ -9,9 +9,9 @@ module Guard
         def guard_message( result, duration )
           case result
           when true
-            "Rails Best Practices checklist has been run successfully\nin %0.2f seconds." % [duration]
+            "Rails Best Practices has been run successfully\nin %0.2f seconds." % [duration]
           else
-            "Rails Best Practices checklist run has failed!\nPlease check manually."
+            "Rails Best Practices run has failed!\nPlease check manually."
           end
         end
 

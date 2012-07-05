@@ -11,13 +11,13 @@ describe Guard::RailsBestPractices do
     end
 
     it 'should call #run_bestpractices with :run_on_start => true' do
-      guard = Guard::RailsBestPractices.new('rails_best_practices', :run_on_start => true ) 
+      guard = Guard::RailsBestPractices.new('rails_best_practices', :run_on_start => true )
       guard.should_receive(:run_bestpractices).and_return(true)
       guard.start
     end
 
     it 'should call #run_bestpractices with :run_on_start => false' do
-      guard = Guard::RailsBestPractices.new('rails_best_practices', :run_on_start => false )  
+      guard = Guard::RailsBestPractices.new('rails_best_practices', :run_on_start => false )
       guard.should_receive(:run_bestpractices).and_return(true)
       guard.start
     end
