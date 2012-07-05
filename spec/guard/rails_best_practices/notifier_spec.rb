@@ -5,12 +5,12 @@ describe Guard::RailsBestPractices::Notifier do
 
   it 'should format success message' do
     message = subject.guard_message(true, 5.5)
-    message.should == "Rails Best Practices checklist has been run successfully\nin 5.50 seconds."
+    message.should == "Rails Best Practices has been run successfully\nin 5.50 seconds."
   end
 
   it 'should format fail message' do
     message = subject.guard_message(false, 5.5)
-    message.should == "Rails Best Practices checklist run has failed!\nPlease check manually."
+    message.should == "Rails Best Practices run has failed!\nPlease check manually."
   end
 
   it 'should select success image' do
@@ -23,7 +23,7 @@ describe Guard::RailsBestPractices::Notifier do
 
   it 'should call Guard::Notifier for succeed checklist run' do
     ::Guard::Notifier.should_receive(:notify).with(
-      "Rails Best Practices checklist has been run successfully\nin 5.50 seconds.",
+      "Rails Best Practices has been run successfully\nin 5.50 seconds.",
       :title => 'Rails Best Practices',
       :image => :success
     )
@@ -32,7 +32,7 @@ describe Guard::RailsBestPractices::Notifier do
 
   it 'should call Guard::Notifier for failed checklist run' do
     ::Guard::Notifier.should_receive(:notify).with(
-      "Rails Best Practices checklist run has failed!\nPlease check manually.",
+      "Rails Best Practices run has failed!\nPlease check manually.",
       :title => 'Rails Best Practices',
       :image => :failed
     )
