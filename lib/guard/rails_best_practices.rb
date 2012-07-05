@@ -53,11 +53,12 @@ module Guard
 
       run_options = options.select do |key, value|
         value && ![:run_at_start, :notify].include?(key)
-      end.keys.map do |opt|
-        if [:format, :exclude, :only].include?(opt)
-          [ opt.to_s, options[opt] ].join(' ')
+      end.to_a.map do |opt|
+        f_opt = opt[0].to_s.gsub('_','-')
+        if [:format, :exclude, :only].include?(opt[0])
+          [ f_opt, opt[1] ].join(' ')
         else
-          opt.to_s.gsub('_','-')
+          f_opt
         end
       end
 
