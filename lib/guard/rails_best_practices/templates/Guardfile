@@ -1,3 +1,10 @@
+# Sample config for Rails Best Practices
+# See README for details
+
 guard 'rails_best_practices' do
   watch(%r{^app/(.+)\.rb$})
+  watch(%r{^vendor/(.+)\.rb$})
+  watch(%r{^spec/(.+)\.rb$})
+  watch(%r{^test/(.+)\.rb$})
+  watch(%r{^features/(.+)\.rb$})
 end
