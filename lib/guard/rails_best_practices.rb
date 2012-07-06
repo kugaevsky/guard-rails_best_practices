@@ -51,25 +51,28 @@ module Guard
     def run_bestpractices
       started_at = Time.now
 
-      cmd = ['rails_best_practices']
-      run_options = options.select do |key, value|
-        value && ![:run_at_start, :notify].include?(key)
-      end.to_a.map do |opt|
-        f_opt = opt[0].to_s.gsub('_','-')
-        if [:format, :exclude, :only].include?(opt[0])
-          cmd << [ f_opt, opt[1] ].join(' ')
-        else
-          cmd << f_opt
-        end
+      cmd_args = ['rails_best_practices']
+
+      options.each_pair do |key, value|
+        cmd_args << format_option(key, value)
       end
+
+      cmd = cmd_args.compact.join(' --')
 
       UI.info "Running Rails Best Practices checklist with command\n=> #{cmd}\n", :reset => true
 
-      @result = system(cmd.join(' --'))
+      @result = system(cmd)
 
       Notifier::notify( @result, Time.now - started_at ) if notify?
       @result
     end
 
+    def format_option(key, value)
+      unless [:run_at_start, :notify].include?(key)
+        arg = key.to_s.gsub('_','-')
+        arg = "#{arg} #{value}" if [:format, :exclude, :only].include?(key)
+        value ? arg : nil
+      end
+    end
   end
 end

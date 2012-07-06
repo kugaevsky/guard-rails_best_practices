@@ -67,13 +67,12 @@ describe Guard::RailsBestPractices do
   end
 
   context '#run_bestpractices' do
-    it 'should run railsbp with default options' do
-      command = "rails_best_practices --vendor --spec --test --features"
-      subject.should_receive('system').with(command).and_return(true)
+    it 'should call railsbp with default options' do
+      subject.should_receive('system').with(anything()).and_return(true)
       subject.send(:run_bestpractices)
     end
 
-    it 'should run railsbp with complex options' do
+    it 'should call railsbp with complex options' do
       options = { :run_at_start => false,
                   :features     => false,
                   :with_git     => true,
@@ -82,19 +81,15 @@ describe Guard::RailsBestPractices do
                   :with_mvim    => true,
                   :exclude      => 'schema.rb'
                 }
-      command = [ 'rails_best_practices',
-                  '--vendor',
-                  '--spec',
-                  '--test',
-                  '--with-git',
-                  '--format html',
-                  '--silent',
-                  '--with-mvim',
-                  '--exclude schema.rb'
-                ].join(' ')
       guard = Guard::RailsBestPractices.new('rails_best_practices', options)
-      guard.should_receive('system').with(command).and_return(true)
+      guard.should_receive('system').with(anything()).and_return(true)
       guard.send(:run_bestpractices)
     end
+  end
+
+  context '#format_option' do
+    it 'should return nil if option value is false'
+    it 'should return formatted argument if option value is true'
+    it 'should return formatted argument if option value is string'
   end
 end
