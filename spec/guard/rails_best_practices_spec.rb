@@ -88,8 +88,20 @@ describe Guard::RailsBestPractices do
   end
 
   context '#format_option' do
-    it 'should return nil if option value is false'
-    it 'should return formatted argument if option value is true'
-    it 'should return formatted argument if option value is string'
+    it 'should return nil if option value is false' do
+      subject.send(:format_option, :features, false).should be_nil
+    end
+
+    it 'should return nil if option for guard only' do
+      subject.send(:format_option, :run_at_start, true).should be_nil
+    end
+
+    it 'should return formatted argument if option value is true' do
+      subject.send(:format_option, :with_git, true).should == "with-git"
+    end
+
+    it 'should return formatted argument if option value is string' do
+      subject.send(:format_option, :output_file, 'out.html').should == "output-file out.html"
+    end
   end
 end

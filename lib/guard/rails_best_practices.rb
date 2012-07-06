@@ -70,7 +70,7 @@ module Guard
     def format_option(key, value)
       unless [:run_at_start, :notify].include?(key)
         arg = key.to_s.gsub('_','-')
-        arg = "#{arg} #{value}" if [:format, :exclude, :only].include?(key)
+        arg = "#{arg} #{value}" if [:format, :exclude, :only, :output_file].include?(key)
         value ? arg : nil
       end
     end
