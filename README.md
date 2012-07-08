@@ -1,4 +1,4 @@
-# Guard - Rails Best Practices
+# Guard - Rails Best Practices        [![Build Status](https://secure.travis-ci.org/kugaevsky/guard-haml.png?branch=master)](http://travis-ci.org/kugaevsky/guard-haml) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/kugaevsky/guard-rails_best_practices)
 
 BDD your [Rails Best Practices](http://rails-bestpractices.com/) checklist alongside your specs with [Guard](https://github.com/guard/guard).
 
