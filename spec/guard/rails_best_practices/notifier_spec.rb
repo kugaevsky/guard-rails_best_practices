@@ -1,41 +1,57 @@
 require 'spec_helper'
 
 describe Guard::RailsBestPractices::Notifier do
-  subject { Guard::RailsBestPractices::Notifier }
+  subject { described_class }
 
-  it 'should format success message' do
-    message = subject.guard_message(true, 5.5)
-    message.should == "Rails Best Practices has been run successfully\nin 5.50 seconds."
+  let(:guard_notifier) { ::Guard::Notifier }
+
+  describe '#guard_message' do
+    context 'when recieves true and duration' do
+      it 'should format success message' do
+        subject.guard_message(true, 5.5).
+        should eq "Rails Best Practices has been run successfully\nin 5.50 seconds."
+      end
+    end
+
+    context 'when recieves false and duration' do
+      it 'should format fail message' do
+        subject.guard_message(false, 5.5).
+        should eq "Rails Best Practices run has failed!\nPlease check manually."
+      end
+    end
   end
 
-  it 'should format fail message' do
-    message = subject.guard_message(false, 5.5)
-    message.should == "Rails Best Practices run has failed!\nPlease check manually."
+  describe '#image' do
+    context 'when receives true' do
+      specify { subject.guard_image(true).should be :success }
+    end
+
+    context 'when receives false' do
+      specify { subject.guard_image(false).should be :failed }
+    end
   end
 
-  it 'should select success image' do
-    subject.guard_image(true).should == :success
-  end
+  describe '#notify' do
+    context 'when recieves success' do
+      it 'should call Guard::Notifier for succeed checklist run' do
+        guard_notifier.should_receive(:notify).with(
+          "Rails Best Practices has been run successfully\nin 5.50 seconds.",
+          :title => 'Rails Best Practices',
+          :image => :success
+          )
+        subject.notify(true, 5.5)
+      end
+    end
 
-  it 'should select failed image' do
-    subject.guard_image(false).should == :failed
-  end
-
-  it 'should call Guard::Notifier for succeed checklist run' do
-    ::Guard::Notifier.should_receive(:notify).with(
-      "Rails Best Practices has been run successfully\nin 5.50 seconds.",
-      :title => 'Rails Best Practices',
-      :image => :success
-    )
-    subject.notify(true, 5.5)
-  end
-
-  it 'should call Guard::Notifier for failed checklist run' do
-    ::Guard::Notifier.should_receive(:notify).with(
-      "Rails Best Practices run has failed!\nPlease check manually.",
-      :title => 'Rails Best Practices',
-      :image => :failed
-    )
-    subject.notify(false, 5.5)
+    context 'when recieves failed' do
+      it 'should call Guard::Notifier for failed checklist run' do
+        guard_notifier.should_receive(:notify).with(
+          "Rails Best Practices run has failed!\nPlease check manually.",
+          :title => 'Rails Best Practices',
+          :image => :failed
+        )
+        subject.notify(false, 5.5)
+      end
+    end
   end
 end

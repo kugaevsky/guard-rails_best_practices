@@ -8,20 +8,19 @@ module Guard
     autoload :Notifier, 'guard/rails_best_practices/notifier'
 
     def initialize(watchers = [], options = {})
-      rbp_opts = {  :vendor         => true,
+      @options = {  :vendor         => true,
                     :spec           => true,
                     :test           => true,
-                    :features       => true
+                    :features       => true,
+                    :run_at_start   => true
                   }
-      guard_opts = { :run_at_start   => true }
-      options = rbp_opts.merge options
-      options = guard_opts.merge options
+      @options.merge! options
 
-      super
+      super watchers, @options
     end
 
     def start
-      run_bestpractices if options[:run_at_start]
+      run_bestpractices if @options[:run_at_start]
     end
 
     def stop
@@ -44,19 +43,14 @@ module Guard
     end
 
     def notify?
-      !!options[:notify]
+      !!@options[:notify]
     end
 
   private
     def run_bestpractices
       started_at = Time.now
-
       cmd_args = ['rails_best_practices']
-
-      options.each_pair do |key, value|
-        cmd_args << format_option(key, value)
-      end
-
+      @options.each_pair { |key, value| cmd_args << format_option(key, value) }
       cmd = cmd_args.compact.join(' --')
 
       UI.info "Running Rails Best Practices checklist with command\n=> #{cmd}\n", :reset => true
