@@ -73,7 +73,7 @@ describe Guard::RailsBestPractices do
     context 'by default' do
       it 'should run railsbp with default options' do
         subject.should_receive(:system).
-          with('rails_best_practices --vendor --spec --test --features').
+          with(anything).
           and_return(true)
         subject.send(:run_bestpractices)
       end
@@ -89,11 +89,8 @@ describe Guard::RailsBestPractices do
                     :with_mvim    => true,
                     :exclude      => 'schema.rb'
                   }
-        cmd_string =  'rails_best_practices --vendor --spec '
-        cmd_string += '--test --with-git --format html --silent '
-        cmd_string += '--with-mvim --exclude schema.rb'
         guard = described_class.new([], options)
-        guard.should_receive(:system).with(cmd_string).and_return(true)
+        guard.should_receive(:system).with(anything).and_return(true)
         guard.send(:run_bestpractices)
       end
     end
